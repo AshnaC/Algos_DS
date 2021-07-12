@@ -32,13 +32,13 @@ var wordBreak = function (s, wordDict) {
     // dp tracks if string with len == index can be made from wordDict
     dp[0] = true;
     for (let len = 1; len <= s.length; len++) {
+        dp[len] = false;
         for (let i = 0; i < len; i++) {
             const wordsInDict = dp[i] && set.has(s.substring(i, len));
             if (wordsInDict) {
                 dp[len] = true;
                 break;
             }
-            dp[len] = false;
         }
     }
     return dp[s.length];
