@@ -14,57 +14,39 @@
 // https://leetcode.com/problems/binary-tree-level-order-traversal/
 
 var levelOrder = function (root) {
-    if (!root) {
-        return [];
-    }
-    let result = [[root.val]];
     let queue = [root];
+    let ans = [];
     while (queue.length) {
-        // For each level - 3 layers
         let len = queue.length;
-        let sub = [];
-        for (let i = 0; i < len; i++) {
-            // For all elements in a layer
+        let arr = [];
+        while (len) {
             let node = queue.shift();
-            if (!node.left && !node.right) {
-                continue;
-            }
-            if (node.left) {
+            if (node) {
+                arr.push(node.val);
                 queue.push(node.left);
-                sub.push(node.left.val);
-            }
-            if (node.right) {
                 queue.push(node.right);
-                sub.push(node.right.val);
             }
+            len--;
         }
-        sub.length && result.push(sub);
+        arr.length && ans.push(arr);
     }
 
-    return result;
+    return ans;
 };
 
 //DFS
 var levelOrder = function (root) {
-    if (!root) {
-        return [];
-    }
-
-    let result = [[root.val]];
+    let result = [];
 
     const dfs = (node, level) => {
         if (node) {
-            if (result[level]) {
-                result[level].push(node.val);
-            } else {
-                result[level] = [node.val];
-            }
+            result[level] = result[level] || [];
+            result[level].push(node.val);
             dfs(node.left, level + 1);
             dfs(node.right, level + 1);
         }
     };
 
-    dfs(root.left, 1);
-    dfs(root.right, 1);
+    dfs(root, 0);
     return result;
 };

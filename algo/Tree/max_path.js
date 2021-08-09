@@ -27,6 +27,7 @@ var maxPathSum = function (root) {
         maxVal = Math.max(maxVal, fullTreeVal);
 
         // Path Value when only one side is considered
+        // TO be included in a larger subtree
         return node.val + Math.max(leftNode, rightNode);
     };
     getPath(root);

@@ -16,6 +16,7 @@ const maxDepth2 = root => {
 
     while (queue.length) {
         let len = queue.length;
+        // child nodes of each parent node should be only counted as 1
         for (let i = 0; i < len; i++) {
             let node = queue.shift();
             if (node.left) {
@@ -28,6 +29,22 @@ const maxDepth2 = root => {
         count++;
     }
     return count;
+};
+
+//DFS
+var maxDepth = function (root) {
+    let max = 0;
+    const dfs = (node, count) => {
+        if (!node) {
+            return 0;
+        }
+        max = Math.max(max, count);
+
+        dfs(node.left, count + 1);
+        dfs(node.right, count + 1);
+    };
+    dfs(root, 1);
+    return max;
 };
 
 var isSameTree = function (p, q) {

@@ -90,57 +90,46 @@ var deserialize = function (data) {
  * @return {string}
  */
 
-// DFSS
-
-function TreeNode(val) {
-    this.val = val;
-    this.left = this.right = null;
-}
+// DFS
 
 var serialize = function (root) {
-    if (!root) {
-        return [];
-    }
     let result = [];
-
     const dfs = node => {
-        if (!node) {
-            result.push("null");
-        } else {
+        if (node) {
             result.push(node.val);
             dfs(node.left);
             dfs(node.right);
+        } else {
+            result.push("null");
         }
     };
+
     dfs(root);
-    return result.join(",");
+    return result.join("|");
 };
 
-var deserialize = function (data) {
-    if (!data || !data.length) {
-        return null;
-    }
-    const vals = data.split(",");
-    if (!vals.length) {
-        return null;
-    }
-    let i = 0;
-    const dfs = () => {
-        let root = null;
-        if (vals[i] != "null") {
-            root = new TreeNode(vals[i]);
-            i = i + 1;
-            root.left = dfs();
-            root.right = dfs();
-        } else {
-            i = i + 1;
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function (str) {
+    let data = str.split("|");
+    let index = 0;
+    const build = () => {
+        let val = data[index];
+        index++;
+        if (val == "null") {
+            return null;
         }
-        return root;
+        let newNode = new TreeNode(val);
+        newNode.left = build();
+        newNode.right = build();
+        return newNode;
     };
 
-    const node = dfs();
-
-    return node;
+    return build();
 };
 
 /**

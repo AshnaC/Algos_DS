@@ -18,6 +18,31 @@ var wordBreak = function (s, wordDict, dict = {}) {
     return false;
 };
 
+var wordBreak = function (s, wordDict) {
+    let set = new Set(wordDict);
+    let map = {};
+
+    let getWord = word => {
+        if (!word) {
+            return true;
+        }
+        if (map[word] !== undefined) {
+            return map[word];
+        }
+
+        for (let i = 0; i < word.length; i++) {
+            let isFound = set.has(word.substring(0, i + 1)) && getWord(word.substring(i + 1));
+            if (isFound) {
+                map[word] = true;
+                return true;
+            }
+        }
+        map[word] = false;
+        return false;
+    };
+    return getWord(s);
+};
+
 // https://leetcode.com/problems/word-break/submissions/
 // Recursion with memoization
 // Go through words of length from 0 tp length of string

@@ -19,6 +19,18 @@ var invertTree1 = function (root) {
     return root;
 };
 
+var invertTree = function (root) {
+    const dfs = node => {
+        if (node) {
+            [node.left, node.right] = [node.right, node.left];
+            dfs(node.left);
+            dfs(node.right);
+        }
+    };
+    dfs(root);
+    return root;
+};
+
 var invertTree2 = function (root) {
     let queue = [root];
     while (queue.length) {

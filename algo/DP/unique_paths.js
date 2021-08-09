@@ -16,6 +16,25 @@ var uniquePaths = function (m, n, map = {}) {
     return result;
 };
 
+var uniquePaths = function (m, n) {
+    let visited = {};
+    const goPath = (r, c) => {
+        let key = r + "_" + c;
+        if (r > m || c > n) {
+            return 0;
+        }
+        if (visited[key] != undefined) {
+            return visited[key];
+        }
+        if (r == m || c == n) {
+            return 1;
+        }
+        let count = goPath(r + 1, c) + goPath(r, c + 1);
+        visited[key] = count;
+        return count;
+    };
+    return goPath(1, 1);
+};
 // Dynamic Problem
 
 // For last row and column the number of paths to last square is 1
@@ -36,4 +55,21 @@ var uniquePaths2 = function (m, n) {
         }
     }
     return dp[m - 1][n - 1];
+};
+
+var uniquePaths = function (m, n) {
+    let key = m + "_" + n;
+    let map = {};
+    map[key] = 1;
+    for (let i = m; i > 0; i--) {
+        for (let j = n; j > 0; j--) {
+            key = i + "_" + j;
+            if (i == m && j == n) {
+                // Last elt
+            } else {
+                map[key] = (map[i + 1 + "_" + j] || 0) + (map[i + "_" + (j + 1)] || 0);
+            }
+        }
+    }
+    return map[1 + "_" + 1];
 };

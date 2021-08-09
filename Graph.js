@@ -22,7 +22,7 @@ class Graph {
         for (let i in this.graph) {
             console.log("Node ==>", i);
             for (let k of this.graph[i]) {
-                console.log(k);
+                // console.log(k);
             }
         }
     }
@@ -45,4 +45,4 @@ graph.addEdge("1", "0");
 graph.addEdge("0", "2");
 graph.addEdge("6", "5");
 graph.showConnections();
-JSON.stringify(graph.graph);
+console.log(JSON.stringify(graph.graph));
