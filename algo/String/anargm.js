@@ -34,3 +34,22 @@ var groupAnagrams = function (strs) {
     }
     return Object.values(map);
 };
+
+var groupAnagrams = function (strs) {
+    let map = {};
+    let aCode = "a".charCodeAt();
+    for (let str of strs) {
+        let count = new Array(26).fill(0);
+        for (let c of str) {
+            count[c.charCodeAt() - aCode] = count[c.charCodeAt() - aCode] + 1;
+        }
+        let base = count.join("#");
+        map[base] = map[base] || [];
+        map[base].push(str);
+    }
+    let result = [];
+    for (let key in map) {
+        result.push(map[key]);
+    }
+    return result;
+};

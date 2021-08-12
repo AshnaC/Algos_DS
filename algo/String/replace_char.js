@@ -29,3 +29,29 @@ var characterReplacement = function (s, k) {
 };
 
 characterReplacement("AACAABABBA", 2);
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var characterReplacement = function (s, k) {
+    let start = 0;
+    let end = 0;
+    let maxLen = 0;
+    let map = {};
+    while (end < s.length) {
+        let char = s[end];
+        map[char] = (map[char] || 0) + 1;
+        maxLen = Math.max(maxLen, map[char]);
+        let remaining = end - start + 1 - maxLen;
+        if (remaining > k) {
+            let startChar = s[start];
+            map[startChar]--;
+            start++;
+        }
+        end++;
+    }
+
+    return end - start;
+};

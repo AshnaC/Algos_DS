@@ -50,6 +50,23 @@ var lengthOfLongestSubstring = function (s) {
     return maxStrLen;
 };
 
+var lengthOfLongestSubstring = function (s) {
+    let maxLen = 0;
+    let start = 0;
+    let end = 0;
+    let map = {};
+    while (end < s.length) {
+        let char = s[end];
+        if (map[char] != undefined) {
+            start = Math.max(start, map[char] + 1);
+        }
+        map[char] = end;
+        maxLen = Math.max(maxLen, end - start + 1);
+        end++;
+    }
+    return maxLen;
+};
+
 console.log(lengthOfLongestSubstring3("abcabcbb"));
 console.log(lengthOfLongestSubstring("bbbbb"));
 console.log(lengthOfLongestSubstring("pwwkew"));
