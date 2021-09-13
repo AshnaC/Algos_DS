@@ -35,3 +35,20 @@ var productExceptSelf1 = function (nums) {
     }
     return res;
 };
+
+var productExceptSelf = function (nums) {
+    let leftProduct = [1];
+
+    for (let i = 0; i < nums.length - 1; i++) {
+        leftProduct[i + 1] = leftProduct[i] * nums[i];
+    }
+
+    let product = 1;
+
+    for (let i = nums.length - 1; i >= 0; i--) {
+        leftProduct[i] = product * leftProduct[i];
+        product = product * nums[i];
+    }
+
+    return leftProduct;
+};

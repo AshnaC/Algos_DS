@@ -34,31 +34,72 @@ let getMedian = (arr1, arr2) => {
     }
 };
 
+var findMedianSortedArrays2 = function (nums1, nums2) {
+    let totalLen = nums1.length + nums2.length;
+    let halfCount = Math.floor(totalLen / 2);
+
+    let first = Math.floor(nums1.length / 2) - 1;
+    let second = halfCount - first - 2;
+
+    while (true) {
+        let firstLeft = first < 0 ? Number.NEGATIVE_INFINITY : nums1[first];
+        let firstRight =
+            first + 1 > nums1.length - 1
+                ? Number.POSITIVE_INFINITY
+                : nums1[first + 1];
+
+        let secondLeft = second < 0 ? Number.NEGATIVE_INFINITY : nums2[second];
+        let secondRight =
+            second + 1 > nums2.length - 1
+                ? Number.POSITIVE_INFINITY
+                : nums2[second + 1];
+
+        if (firstLeft <= secondRight && secondLeft <= firstRight) {
+            if (totalLen % 2 === 0) {
+                return (
+                    (Math.max(firstLeft, secondLeft) +
+                        Math.min(firstRight, secondRight)) /
+                    2
+                );
+            } else {
+                return Math.min(firstRight, secondRight);
+            }
+            // Found median return
+        } else if (firstLeft > secondRight) {
+            first--;
+            second++;
+        } else if (secondLeft > firstRight) {
+            second--;
+            first++;
+        }
+    }
+};
+
 var findMedianSortedArrays = function (nums1, nums2) {
-    
-    let totalLen = nums1.length +nums2.length;
-    let medPosition = Math.floor(totalLen/2) +1;
+    let totalLen = nums1.length + nums2.length;
+    let medPosition = Math.floor(totalLen / 2) + 1;
     let i = 0; // pointer of nums1
     let j = 0; // pointer of nums1
     let mergeArr = [];
     // Only need to iterate till medPosition is reached
-    while(medPosition > mergeArr.length){
-        if((nums1[i]<= nums2[j]) && nums1[i]!== undefined){
-            mergeArr.push(nums1[i])
-            i++
-        }else if(nums2[j] !== undefined){
-            mergeArr.push(nums2[j])
-            j++    
-        }else{
-            mergeArr = [...mergeArr, ...nums1.slice(i), ...nums2.slice(j)]
+    while (medPosition > mergeArr.length) {
+        if (nums1[i] <= nums2[j] && nums1[i] !== undefined) {
+            mergeArr.push(nums1[i]);
+            i++;
+        } else if (nums2[j] !== undefined) {
+            mergeArr.push(nums2[j]);
+            j++;
+        } else {
+            mergeArr = [...mergeArr, ...nums1.slice(i), ...nums2.slice(j)];
             break;
         }
     }
-    console.log(mergeArr)
-    if(totalLen %2 == 0){
-        return (mergeArr[(totalLen/2)-1] + mergeArr[totalLen/2])/2
-    }else{
-        return mergeArr[Math.floor(totalLen/2)]
+    console.log(mergeArr);
+    if (totalLen % 2 == 0) {
+        return (mergeArr[totalLen / 2 - 1] + mergeArr[totalLen / 2]) / 2;
+    } else {
+        return mergeArr[Math.floor(totalLen / 2)];
     }
+};
 
 console.log(getMedian([104, 200], [2, 3, 10, 50]));

@@ -127,3 +127,59 @@ length = 0;
   len[1,1] 0
   lem[0,1] -1
   len[0,0] =2
+
+
+
+var clicks = [];
+for (var i = 0; i < nodes.length; i++) {
+  nodes[i].addEventHandler('click', function() {
+    clicks[i]++;
+  });
+}
+
+// [empty, empty, empty, empty, 5]
+
+// a={b: 3}
+
+// stringify(6) // => "6"
+// stringify("abc") // => "\"abc\"" (or '"abc"' with single quotes)
+// a={b: 3, c:[]}
+
+// Primitives; number, string, null, undefined, boolean // "null" ,"undfined", "true", "false"
+// Objects; object, array (and function)
+
+// Like JSON.stringify
+function stringify(value) {
+  if(value === null){
+    return "null"
+  }
+  
+  
+  let str = ""
+  if(typeof value == "object"){
+      for(let key in value){ //{"b":3, "c":[]}
+        
+         str = str ? `${str},"${key}":${stringify(value[key])}`:`"${key}":${stringify(value[key])}`
+     }
+    str = `{${str}}`
+    return str
+  }else if(Number(value)){
+    return value.toString()
+  }
+  else if(typeof value === "string"){
+    return `"${value}"` // => '"abc"'
+  }
+  else if(Array.isArray(value)){
+    // stringify([1,2]) // => 
+    value.forEach(item=> {
+      str = str ? str+','+ stringify(item): stringify(item)
+      
+    } )
+    return str?`[${str}]`:"[]" //=[]
+  }
+  else{
+    return value.toString()
+  }
+}
+
+// 'abc' => '"abc"'

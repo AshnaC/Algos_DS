@@ -4,35 +4,27 @@
  */
 
 //https://leetcode.com/problems/merge-intervals/submissions/
-var merge1 = function (intervals) {
-    // Sort intervals
+var merge = function (intervals) {
     intervals = intervals.sort((a, b) => a[0] - b[0]);
-    // To keep tracko f currentt merged element
-    // Start with first element updated up on merge and to previous dealth element
-    let merge = intervals[0];
-    let res = [];
-    let [newStart, newEnd] = merge;
+
+    let newStart = intervals[0][0];
+    let newEnd = intervals[0][1];
+    let ans = [];
+
     for (let i = 1; i < intervals.length; i++) {
         let [start, end] = intervals[i];
-
-        // Merge Totally before current
-        if (newEnd < start) {
-            // Add merge to res
-            res.push([newStart, newEnd]);
-
-            // Reset merge as this element -
-            // since we have to check its overlap with next interval
+        if (newEnd >= start) {
+            //Overlaps - merge
+            newEnd = Math.max(end, newEnd);
+        } else {
+            ans.push([newStart, newEnd]);
             newStart = start;
             newEnd = end;
-        } else {
-            // Overlaps
-            newStart = Math.min(newStart, start);
-            newEnd = Math.max(newEnd, end);
         }
     }
 
-    res.push([newStart, newEnd]);
-    return res;
+    ans.push([newStart, newEnd]);
+    return ans;
 };
 
 //https://www.youtube.com/watch?v=44H3cEC2fFM

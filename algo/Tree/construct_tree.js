@@ -26,6 +26,8 @@ var buildTree = function (preorder, inorder) {
 
     let root = new TreeNode(preorder[0]);
     let rootIndex = inorder.findIndex(elt => elt === preorder[0]);
+    // RootIndex essentially returns the count of elements to the left of 
+    // the rootNode
     root.left = buildTree(preorder.slice(1, rootIndex + 1), inorder.slice(0, rootIndex));
     root.right = buildTree(preorder.slice(rootIndex + 1), inorder.slice(rootIndex + 1));
     return root;

@@ -144,7 +144,7 @@ class QueueStacks {
         this.front.pop();
         this.length--;
         return this;
-    }
+    } 
 }
 
 const qs = new QueueStacks();

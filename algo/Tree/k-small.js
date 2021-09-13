@@ -57,3 +57,28 @@ var kthSmallest2 = function (root, k) {
     }
     // return list[k-1]
 };
+
+var kthSmallest = function (root, k) {
+    let left = root;
+
+    let stack = [];
+    let list = [];
+
+    while (left) {
+        stack.push(left);
+        left = left.left;
+    }
+
+    while (stack.length) {
+        let elt = stack.pop();
+        list.push(elt.val);
+
+        let right = elt.right;
+        while (right) {
+            stack.push(right);
+            right = right.left;
+        }
+    }
+
+    return list[k - 1];
+};
